@@ -6,7 +6,16 @@ body {
   margin: 0;
   font-size: 1.1em;
 }
-ul, li, p, h1, h2, h3, h4 {
+h2 {
+  text-align: center;
+}
+ul,
+li,
+p,
+h1,
+h2,
+h3,
+h4 {
   margin: 0;
   padding: 0;
 }
@@ -22,6 +31,7 @@ ul {
   font-weight: bold;
   cursor: pointer;
   font-size: 1em;
+  margin-left: 130px;
 }
 .btn:hover {
   background: #1f9751;
