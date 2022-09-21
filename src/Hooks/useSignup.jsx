@@ -5,6 +5,7 @@ export const useSignup = () => {
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(false);
 
+  //parameters for signup come from the form items in signup.jsx
   const signup = async (displayName, email, password) => {
     setError(null);
     setIsPending(true);
