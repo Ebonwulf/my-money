@@ -4,11 +4,11 @@ import styles from './Signup.module.scss';
 const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
+  const [displayName, setDisplayName] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(username, email, password);
+    console.log(displayName, email, password);
   };
 
   return (
@@ -18,8 +18,8 @@ const Signup = () => {
         <span>Username:</span>
         <input
           type='text'
-          onChange={(e) => setUsername(e.target.value)}
-          value={username}
+          onChange={(e) => setDisplayName(e.target.value)}
+          value={displayName}
         />
       </label>
       <label>
