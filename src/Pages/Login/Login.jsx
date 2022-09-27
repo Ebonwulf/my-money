@@ -1,13 +1,15 @@
 import { useState } from 'react';
+import { useLogin } from '../../Hooks/useLogin';
 import styles from './Login.module.scss';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { login, error, isPending } = useLogin();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(email, password);
+    login(email, password);
   };
 
   {
@@ -33,7 +35,13 @@ const Login = () => {
         />
       </label>
       {/*we don't need the styles.classname for the buttom because they styles are in the index.scss file, which is not a module file */}
-      <button className='btn'>Login</button>
+      {!isPending && <button className='btn'>Login</button>}
+      {isPending && (
+        <button className='btn' disabled>
+          Loading...
+        </button>
+      )}
+      {error && <p>{error}</p>}
     </form>
   );
 };
