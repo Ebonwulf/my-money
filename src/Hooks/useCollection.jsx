@@ -1,12 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { projectFirestore } from '../Firebase/config.jsx';
 
-export const useCollection = (collection) => {
+export const useCollection = (collection, _query) => {
   const [documents, setDocuments] = useState(null);
   const [error, setError] = useState(null);
 
+  //this prevents an infinite loop (in the useEffect below) that is caused by _query being an array and .current gets the current value of the array. It does this because we are using the useRef hook to break out of the loop and using a reference type as the dependancy.
+  //_query is an array and is different on every function call. By wrapping it in useRef it is then not seen as different on every call.
+  const query = useRef(_query).current;
+
   useEffect(() => {
     let ref = projectFirestore.collection(collection);
+
+    // this makes it so that only transactions linked to something (uid in this case) will be displayed. See the home component for the three parameters passed into the query in useCollections to acheive this
+    if (query) {
+      ref = ref.where(...query);
+    }
 
     const unsubscribe = ref.onSnapshot(
       (snapshot) => {
@@ -27,7 +36,7 @@ export const useCollection = (collection) => {
 
     // unsubscribe on unmount so that when we are no longer on the page it does not continue to update the state and no longer listens for the snapshot.
     return () => unsubscribe();
-  }, [collection, documents]);
+  }, [collection, query]);
 
   return { documents, error };
 };
