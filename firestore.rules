@@ -2,8 +2,17 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /transactions/{document=**} {
-      allow read, write: if
-      		request.time < timestamp.date(2022, 10, 27);
+      // allow read, write;
+      // allow read, create, delete, update;
+
+      // allows only authenticated users to create new transactions
+      allow create: if request.auth != null;
+
+      // only allows read or delete if the uid logged in matches the uid attatched to the transaction. So logged in user uid must match the document creator to read & delete.
+      allow read, delete: if request.auth.uid == resource.data.uid;
     }
   }
 }
+
+// to deploy these rules to firebase you need to use the command firebase deploy --only firestore 
+// you need to do it like this otherwise it will deploy the whole application not just rhe rules.
