@@ -52,16 +52,19 @@ export const useFirestore = (collection) => {
       //creates a new firebase timestamp that is stored in a const so we can add it to the document
       const createdAt = timestamp.fromDate(new Date());
       const addedDocument = await ref.add({
-        ...document,
+        ...doc,
         createdAt /*can also be written as createdAt: createdAt but is better to use the shorthand when they both have the same name */,
       });
-      dispatchIfNotCancelled({ type: 'ADDED_DOCUMENT', payload: addDocument });
+      dispatchIfNotCancelled({
+        type: 'ADDED_DOCUMENT',
+        payload: addedDocument,
+      });
     } catch (err) {
       dispatchIfNotCancelled({ type: 'ERROR', payload: err.message });
     }
   };
   // delete document
-  const deleteDocument = async (id) => {};
+  const deleteDocument = async (doc) => {};
   // cleanup function
   useEffect(() => {
     return () => setIsCancelled(true);

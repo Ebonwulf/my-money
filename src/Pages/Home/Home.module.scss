@@ -43,6 +43,14 @@
   display: block;
   width: 100%;
 }
+.sidebar button:hover {
+  background-color: #fff;
+  color: #1f9751;
+}
+.sidebar button:active {
+  color: #fff;
+  background-color: transparent;
+}
 .sidebar h3 {
   color: #1f9751;
   margin-bottom: 20px;
